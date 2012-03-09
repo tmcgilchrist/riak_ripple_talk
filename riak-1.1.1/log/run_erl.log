@@ -1,0 +1,8 @@
+run_erl [14890] Fri Mar  9 11:13:42 2012
+Args before exec of shell:
+run_erl [14890] Fri Mar  9 11:13:42 2012
+argv[0] = sh
+run_erl [14890] Fri Mar  9 11:13:42 2012
+argv[1] = -c
+run_erl [14890] Fri Mar  9 11:13:42 2012
+argv[2] = exec /Users/tim/code/ruby/rails/riak_demo/riak-1.1.1/bin/riak console

@@ -1,0 +1,113 @@
+
+=====
+===== LOGGING STARTED Fri Mar  9 11:13:42 EST 2012
+=====
+Exec: /Users/tim/code/ruby/rails/riak_demo/riak-1.1.1/erts-5.8.5/bin/erlexec -boot /Users/tim/code/ruby/rails/riak_demo/riak-1.1.1/releases/1.1.1/riak             -embedded -config /Users/tim/code/ruby/rails/riak_demo/riak-1.1.1/etc/app.config             -pa ./lib/basho-patches             -args_file /Users/tim/code/ruby/rails/riak_demo/riak-1.1.1/etc/vm.args -- console
+Root: /Users/tim/code/ruby/rails/riak_demo/riak-1.1.1
+Erlang R14B04 (erts-5.8.5) [source] [64-bit] [smp:8:8] [rq:8] [async-threads:64] [hipe] [kernel-poll:true]
+
+
+=INFO REPORT==== 9-Mar-2012::11:13:43 ===
+    alarm_handler: {set,{system_memory_high_watermark,[]}}
+** ./lib/basho-patches/etop_txt.beam hides /Users/tim/code/ruby/rails/riak_demo/riak-1.1.1/lib/observer-0.9.10/ebin/etop_txt.beam
+** /Users/tim/code/ruby/rails/riak_demo/riak-1.1.1/lib/observer-0.9.10/ebin/etop_txt.beam hides /Users/tim/code/ruby/rails/riak_demo/riak-1.1.1/lib/basho-patches/etop_txt.beam
+** Found 2 name clashes in code paths 
+11:13:44.133 [info] Application lager started on node 'riak@127.0.0.1'
+11:13:44.254 [info] Application riak_core started on node 'riak@127.0.0.1'
+11:13:44.257 [info] Application riak_control started on node 'riak@127.0.0.1'
+11:13:44.258 [info] Application basho_metrics started on node 'riak@127.0.0.1'
+11:13:44.260 [info] Application cluster_info started on node 'riak@127.0.0.1'
+11:13:44.270 [info] Application merge_index started on node 'riak@127.0.0.1'
+11:13:44.296 [info] Waiting for application riak_pipe to start (0 seconds).
+11:13:44.297 [info] Application riak_pipe started on node 'riak@127.0.0.1'
+11:13:44.329 [info] Application inets started on node 'riak@127.0.0.1'
+11:13:44.334 [info] Application mochiweb started on node 'riak@127.0.0.1'
+11:13:44.349 [info] Application erlang_js started on node 'riak@127.0.0.1'
+11:13:44.357 [info] Application luke started on node 'riak@127.0.0.1'
+11:13:44.397 [info] Wait complete for application riak_pipe (0 seconds)
+11:13:44.452 [info] Spidermonkey VM (thread stack: 16MB, max heap: 8MB, pool: riak_kv_js_map) host starting (<0.397.0>)
+11:13:44.455 [info] Spidermonkey VM (thread stack: 16MB, max heap: 8MB, pool: riak_kv_js_map) host starting (<0.398.0>)
+11:13:44.457 [info] Spidermonkey VM (thread stack: 16MB, max heap: 8MB, pool: riak_kv_js_map) host starting (<0.399.0>)
+11:13:44.460 [info] Spidermonkey VM (thread stack: 16MB, max heap: 8MB, pool: riak_kv_js_map) host starting (<0.400.0>)
+11:13:44.463 [info] Spidermonkey VM (thread stack: 16MB, max heap: 8MB, pool: riak_kv_js_map) host starting (<0.401.0>)
+11:13:44.466 [info] Spidermonkey VM (thread stack: 16MB, max heap: 8MB, pool: riak_kv_js_map) host starting (<0.402.0>)
+11:13:44.469 [info] Spidermonkey VM (thread stack: 16MB, max heap: 8MB, pool: riak_kv_js_map) host starting (<0.403.0>)
+11:13:44.472 [info] Spidermonkey VM (thread stack: 16MB, max heap: 8MB, pool: riak_kv_js_map) host starting (<0.404.0>)
+11:13:44.474 [info] Spidermonkey VM (thread stack: 16MB, max heap: 8MB, pool: riak_kv_js_reduce) host starting (<0.406.0>)
+11:13:44.477 [info] Spidermonkey VM (thread stack: 16MB, max heap: 8MB, pool: riak_kv_js_reduce) host starting (<0.407.0>)
+11:13:44.480 [info] Spidermonkey VM (thread stack: 16MB, max heap: 8MB, pool: riak_kv_js_reduce) host starting (<0.408.0>)
+11:13:44.483 [info] Spidermonkey VM (thread stack: 16MB, max heap: 8MB, pool: riak_kv_js_reduce) host starting (<0.409.0>)
+11:13:44.486 [info] Spidermonkey VM (thread stack: 16MB, max heap: 8MB, pool: riak_kv_js_reduce) host starting (<0.410.0>)
+11:13:44.489 [info] Spidermonkey VM (thread stack: 16MB, max heap: 8MB, pool: riak_kv_js_reduce) host starting (<0.411.0>)
+11:13:44.492 [info] Spidermonkey VM (thread stack: 16MB, max heap: 8MB, pool: riak_kv_js_hook) host starting (<0.413.0>)
+11:13:44.495 [info] Spidermonkey VM (thread stack: 16MB, max heap: 8MB, pool: riak_kv_js_hook) host starting (<0.414.0>)
+11:13:44.518 [info] Application bitcask started on node 'riak@127.0.0.1'
+11:13:44.575 [info] Waiting for application riak_kv to start (0 seconds).
+11:13:44.579 [info] Application riak_kv started on node 'riak@127.0.0.1'
+11:13:44.583 [info] Application riak_search started on node 'riak@127.0.0.1'
+11:13:44.584 [info] Application basho_stats started on node 'riak@127.0.0.1'
+11:13:44.599 [info] Application runtime_tools started on node 'riak@127.0.0.1'
+11:13:44.599 [info] Application public_key started on node 'riak@127.0.0.1'
+11:13:44.626 [info] Application ssl started on node 'riak@127.0.0.1'
+Eshell V5.8.5  (abort with ^G)
+(riak@127.0.0.1)1> 11:13:44.677 [info] Wait complete for application riak_kv (0 seconds)
+
+===== Fri Mar  9 11:23:43 EST 2012
+11:23:43.849 [error] Error in process <0.1581.0> on node 'riak@127.0.0.1' with exit value: {{case_clause,{more,"Pages free:~d.",0,[]}},[{memsup,fread_value,2},{memsup,get_memory_usage,1},{memsup,'-handle_info/2-fun-0-',2}]}
+
+
+11:23:43.853 [info] alarm_handler: {clear,system_memory_high_watermark}
+11:23:43.853 [error] gen_server memsup terminated with reason: no case clause matching {more,"Pages free:~d.",0,[]} in memsup:fread_value/2
+11:23:43.855 [error] CRASH REPORT Process memsup with 0 neighbours crashed with reason: no case clause matching {more,"Pages free:~d.",0,[]} in memsup:fread_value/2
+11:23:43.856 [error] Supervisor os_mon_sup had child memsup started with memsup:start_link() at <0.50.0> exit with reason no case clause matching {more,"Pages free:~d.",0,[]} in memsup:fread_value/2 in context child_terminated
+11:23:43.857 [error] Error in process <0.1584.0> on node 'riak@127.0.0.1' with exit value: {{case_clause,{more,"Pages free:~d.",0,[]}},[{memsup,fread_value,2},{memsup,get_memory_usage,1},{memsup,'-handle_info/2-fun-0-',2}]}
+
+
+11:23:43.858 [error] gen_server memsup terminated with reason: no case clause matching {more,"Pages free:~d.",0,[]} in memsup:fread_value/2
+11:23:43.858 [error] CRASH REPORT Process memsup with 0 neighbours crashed with reason: no case clause matching {more,"Pages free:~d.",0,[]} in memsup:fread_value/2
+11:23:43.859 [error] Supervisor os_mon_sup had child memsup started with memsup:start_link() at <0.1583.0> exit with reason no case clause matching {more,"Pages free:~d.",0,[]} in memsup:fread_value/2 in context child_terminated
+11:23:43.860 [error] Error in process <0.1588.0> on node 'riak@127.0.0.1' with exit value: {badarg,[{erlang,port_command,[#Port<0.5738>,[40,"/usr/bin/vm_stat",10,41,32,60,47,100,101,118,47,110,117,108,108,59,32,101,99,104,111,32,32,34,4,34,10]]},{os,'-unix_cmd/1-fun-0-',2}]}
+
+
+11:23:43.861 [error] gen_server memsup terminated with reason: bad argument in call to erlang:port_command(#Port<0.5738>, [40,"/usr/bin/vm_stat",10,41,32,60,47,100,101,118,47,110,117,108,108,59,32,101,99,104,111,32,32,...]) in os:'-unix_cmd/1-fun-0-'/2
+11:23:43.861 [error] CRASH REPORT Process memsup with 0 neighbours crashed with reason: bad argument in call to erlang:port_command(#Port<0.5738>, [40,"/usr/bin/vm_stat",10,41,32,60,47,100,101,118,47,110,117,108,108,59,32,101,99,104,111,32,32,...]) in os:'-unix_cmd/1-fun-0-'/2
+11:23:43.862 [error] Supervisor os_mon_sup had child memsup started with memsup:start_link() at <0.1586.0> exit with reason bad argument in call to erlang:port_command(#Port<0.5738>, [40,"/usr/bin/vm_stat",10,41,32,60,47,100,101,118,47,110,117,108,108,59,32,101,99,104,111,32,32,...]) in os:'-unix_cmd/1-fun-0-'/2 in context child_terminated
+11:23:43.863 [error] Error in process <0.1590.0> on node 'riak@127.0.0.1' with exit value: {{case_clause,{more,"Pages free:~d.",0,[]}},[{memsup,fread_value,2},{memsup,get_memory_usage,1},{memsup,'-handle_info/2-fun-0-',2}]}
+
+
+11:23:43.864 [error] gen_server memsup terminated with reason: no case clause matching {more,"Pages free:~d.",0,[]} in memsup:fread_value/2
+11:23:43.864 [info] Spidermonkey VM (pool: riak_kv_js_hook) host stopping (<0.413.0>)
+11:23:43.864 [info] Spidermonkey VM (pool: riak_kv_js_reduce) host stopping (<0.407.0>)
+11:23:43.865 [info] Spidermonkey VM (pool: riak_kv_js_reduce) host stopping (<0.409.0>)
+11:23:43.865 [info] Spidermonkey VM (pool: riak_kv_js_hook) host stopping (<0.414.0>)
+11:23:43.865 [info] Spidermonkey VM (pool: riak_kv_js_map) host stopping (<0.397.0>)
+11:23:43.865 [info] Spidermonkey VM (pool: riak_kv_js_map) host stopping (<0.399.0>)
+11:23:43.865 [info] Spidermonkey VM (pool: riak_kv_js_reduce) host stopping (<0.406.0>)
+11:23:43.865 [info] Spidermonkey VM (pool: riak_kv_js_reduce) host stopping (<0.411.0>)
+11:23:43.865 [info] Spidermonkey VM (pool: riak_kv_js_reduce) host stopping (<0.410.0>)
+11:23:43.865 [info] Spidermonkey VM (pool: riak_kv_js_map) host stopping (<0.398.0>)
+11:23:43.866 [info] Spidermonkey VM (pool: riak_kv_js_map) host stopping (<0.404.0>)
+11:23:43.866 [info] Spidermonkey VM (pool: riak_kv_js_map) host stopping (<0.400.0>)
+11:23:43.866 [info] Spidermonkey VM (pool: riak_kv_js_reduce) host stopping (<0.408.0>)
+11:23:43.866 [info] Spidermonkey VM (pool: riak_kv_js_map) host stopping (<0.401.0>)
+11:23:43.866 [info] Spidermonkey VM (pool: riak_kv_js_map) host stopping (<0.402.0>)
+11:23:43.866 [error] CRASH REPORT Process memsup with 0 neighbours crashed with reason: no case clause matching {more,"Pages free:~d.",0,[]} in memsup:fread_value/2
+11:23:43.869 [error] Supervisor os_mon_sup had child memsup started with memsup:start_link() at <0.1589.0> exit with reason no case clause matching {more,"Pages free:~d.",0,[]} in memsup:fread_value/2 in context child_terminated
+11:23:43.870 [error] Error in process <0.1593.0> on node 'riak@127.0.0.1' with exit value: {{case_clause,{more,"Pages free:~d.",0,[]}},[{memsup,fread_value,2},{memsup,get_memory_usage,1},{memsup,'-handle_info/2-fun-0-',2}]}
+
+
+11:23:43.870 [error] gen_server memsup terminated with reason: no case clause matching {more,"Pages free:~d.",0,[]} in memsup:fread_value/2
+11:23:43.871 [error] CRASH REPORT Process memsup with 0 neighbours crashed with reason: no case clause matching {more,"Pages free:~d.",0,[]} in memsup:fread_value/2
+11:23:43.872 [error] Supervisor os_mon_sup had child memsup started with memsup:start_link() at <0.1592.0> exit with reason no case clause matching {more,"Pages free:~d.",0,[]} in memsup:fread_value/2 in context child_terminated
+11:23:43.872 [error] Supervisor os_mon_sup had child memsup started with memsup:start_link() at <0.1592.0> exit with reason reached_max_restart_intensity in context shutdown
+11:23:43.873 [info] Application os_mon exited with reason: shutdown
+11:23:43.873 [error] Error in process <0.1595.0> on node 'riak@127.0.0.1' with exit value: {badarg,[{erlang,port_command,[#Port<0.5741>,[40,"rm -rf ./data/slide-data/14890",10,41,32,60,47,100,101,118,47,110,117,108,108,59,32,101,99,104,111,32,32,34,4,34,10]]},{os,'-unix_cmd/1-fun-0-',2}]}
+
+
+11:23:43.875 [error] gen_server riak_kv_stat terminated with reason: bad argument in call to erlang:port_command(#Port<0.5741>, [40,"rm -rf ./data/slide-data/14890",10,41,32,60,47,100,101,118,47,110,117,108,108,59,32,101,99,...]) in os:'-unix_cmd/1-fun-0-'/2
+11:23:43.876 [error] CRASH REPORT Process riak_kv_stat with 0 neighbours crashed with reason: bad argument in call to erlang:port_command(#Port<0.5741>, [40,"rm -rf ./data/slide-data/14890",10,41,32,60,47,100,101,118,47,110,117,108,108,59,32,101,99,...]) in os:'-unix_cmd/1-fun-0-'/2
+11:23:43.877 [error] Supervisor riak_kv_sup had child riak_kv_stat started with riak_kv_stat:start_link() at <0.256.0> exit with reason bad argument in call to erlang:port_command(#Port<0.5741>, [40,"rm -rf ./data/slide-data/14890",10,41,32,60,47,100,101,118,47,110,117,108,108,59,32,101,99,...]) in os:'-unix_cmd/1-fun-0-'/2 in context shutdown_error
+{"Kernel pid terminated",application_controller,"{application_terminated,os_mon,shutdown}"}
+
+Crash dump was written to: ./log/erl_crash.dump
+Kernel pid terminated (application_controller) ({application_terminated,os_mon,shutdown})
