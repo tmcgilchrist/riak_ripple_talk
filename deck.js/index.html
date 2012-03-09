@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+
+  <title>Riak and Ripple</title>
+
+  <meta name="description" content="Riak and Ripple"/>
+  <meta name="author" content="Tim McGilchrist"/>
+  <meta name="viewport" content="width=1024, user-scalable=no"/>
+
+  <!-- Core and extension CSS files -->
+  <link rel="stylesheet" href="core/deck.core.css"/>
+  <link rel="stylesheet" href="extensions/goto/deck.goto.css"/>
+  <link rel="stylesheet" href="extensions/menu/deck.menu.css"/>
+  <link rel="stylesheet" href="extensions/navigation/deck.navigation.css"/>
+  <link rel="stylesheet" href="extensions/status/deck.status.css"/>
+  <link rel="stylesheet" href="extensions/hash/deck.hash.css"/>
+
+  <!-- Theme CSS files (menu swaps these out) -->
+
+  <!--<link rel="stylesheet" href="themes/style/swiss.css">-->
+
+  <script src="modernizr.custom.js"></script>
+</head>
+
+<body class="deck-container">
+
+<!-- Begin slides -->
+<section class="slide" id="title-slide">
+  <h1>Riak and Ripple</h1>
+  <p>
+    <h3>Tim McGilchrist (@lambda_foo)</h3>
+    <h3>Some guy that writes Ruby and Erlang code.</h3>
+  </p>
+</section>
+
+<section class="slide" id="overview">
+  <h2>Overview</h2>
+  <ol>
+    <li>What is Riak?</li>
+    <li>Riak Concepts</li>
+    <ul>
+      <li>Buckets and Keys</li>
+      <li>Clustering<li>
+      <li>Map Reduce</li>
+    </ul>
+    <li>Using Riak from Ruby</li>
+  </ol>
+</section>
+
+
+<section class="slide" id="what">
+  <h2>What is Riak?</h2>
+  <p>"Riak is an open source, highly scalable, fault-tolerant distributed
+  database."</p>
+  <p>
+    <h4>Features</h4>
+    <ul>
+      <li>Key Value store</li>
+      <li>Highly Available</li>
+      <li>Clustered</li>
+      <li>Map Reduce processing</li>
+      <li>Eventually consistent</li>
+      <li>Written in Erlang</li>
+    </ul>
+  </p>
+</section>
+
+<section class="slide" id="background">
+  <p><h2>Background</h2></p>
+  <p>
+    Based on the Amazon Dynamo paper [1] and Dr Eric Brewer's CAP Theorem [2].
+  </p>
+  <p>
+    Originally developed by Basho as part of a Salesforce application.
+  </p>
+  <p>
+    Proved to be more popular.
+  </p>
+</section>
+
+<section class="slide" id="clients">
+  <p><h2>Clients Available</h2></p>
+  <p>
+    Basho provides supported clients for:
+    <ul>
+      <li>Erlang</li>
+      <li>Ruby</li>
+      <li>Java</li>
+      <li>PHP</li>
+      <li>Javascript</li>
+    </ul>
+    Many more community contributed ones.
+  </p>
+</section>
+
+<section class="slide" id="buckets_keys">
+  <p><h2>Key Concept: Buckets and Keys</h2></p>
+  <p>Buckets and keys are the only way to store data and one way to retrieve data.</p>
+  <p>Bucket is simply a collection of keys</p>
+  <p>Define isolated non-default configuration per bucket. ( number of copies
+  stored in the cluster, node availability for read/writes)</p>
+  <p>Key can be either a string or binary</p>
+</section>
+
+<section class="slide" id="links_metadata">
+  <p><h2>Key Concept: Links and Metadata</h2></p>
+  <p>
+    Objects in Riak can point to other objects.
+    These links can be walked, giving you graph like properties.
+  </p>
+  <p>
+    Objects can have user defined metadata in addition to the actual object
+    contents. Exposed as HTTP headers or associative arrays.
+  </p>
+  <pre><code>
+    eg from curl HTTP
+  </code></pre>
+</section>
+
+<section class="slide" id="map_reduce">
+  <p><h2>Map Reduce</h2></p>
+  <p>Riak supports Map Reduce. Allowing richer queries over the data stored in Riak.</p>
+  <p>Can be written in Javascript or Erlang.</p>
+
+  <pre><code>
+// Map Function
+function(v) {
+  var words =
+     v.values[0].data.toLowerCase().match('\w*','g');
+  var counts = [];
+  for(var word in words)
+    if (words[word] != '') {
+      var count = {};
+      count[words[word]] = 1;
+      counts.push(count);
+    }
+  return counts;
+}
+  </code></pre>
+</section>
+
+<section class="slide" id="map_reduce_2">
+  <p><h2>Map Reduce Cont.</h2></p>
+<pre><code>
+// Reduce Function
+function(values) {
+  var result = {};
+  for (var value in values) {
+    for(var word in values[value]) {
+      if (word in result)
+        result[word] += values[value][word];
+      else
+        result[word] = values[value][word];
+    }
+  }
+  return [result];
+}
+</code></pre>
+
+</section>
+
+<section class="slide" id="clutering">
+  <p><h2>Clustering</h2></p>
+  <img src="images/riak-ring.png"/>
+  <p>
+    <ul>
+      <li>160 bit integer key space</li>
+      <li>Each riak instance is called a node. (may have multiple per physical
+      server)</li>
+      <li>Ring is split into vnodes/partitions.</li>
+      <li>Each node claims a number of vnodes.</li>
+    </ul>
+    eg 32 partitions / 4 nodes = 8 vnodes for each node
+  </p>
+</section>
+
+<section class="slide" id="clustering_2">
+  <p><h2>More Clustering</h2></p>
+  <p>
+    Writes are split across multiple nodes and only returns success if write is
+    <strong>confirmed</strong> by N nodes, where N is configurable.
+  </p>
+  <p>
+    Reads ?
+  </p>
+</section>
+
+<section class="slide" id="wheres_ruby">
+  <p><h2>Where's the Ruby dude?</h2></p>
+  <p>
+    Basho provides great ruby support via the Ripple library.
+  </p>
+  <p>
+    Ripple provides a rich modeling layer for Riak, based on ActiveModel
+    abstraction similar to ActiveRecord, DataMapper and MongoMapper.
+  </p>
+  <p>
+    Supports Rails 3, 3.1 and 3.2 (almost).
+  </p>
+  <code>
+    https://github.com/seancribbs/ripple
+  </code>
+</section>
+
+<!-- deck.navigation snippet -->
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<!-- deck.status snippet -->
+<p class="deck-status">
+  <span class="deck-status-current"></span>
+  /
+  <span class="deck-status-total"></span>
+</p>
+
+<!-- deck.goto snippet -->
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+	<datalist id="goto-datalist"></datalist>
+	<input type="submit" value="Go">
+</form>
+
+<!-- deck.hash snippet -->
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<!-- Grab CDN jQuery, with a protocol relative URL; fall back to local if offline -->
+<script>window.jQuery || document.write('<script src="jquery-1.7.min.js"><\/script>')</script>
+
+<!-- Deck Core and extensions -->
+<script src="core/deck.core.js"></script>
+<script src="extensions/hash/deck.hash.js"></script>
+<script src="extensions/menu/deck.menu.js"></script>
+<script src="extensions/goto/deck.goto.js"></script>
+<script src="extensions/status/deck.status.js"></script>
+<script src="extensions/navigation/deck.navigation.js"></script>
+
+<!-- Initialize the deck -->
+<script>
+$(function() {
+	$.deck('.slide');
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+------------------------------------------------------------------------------------------
+
+        Riak:
+
+------------------------------------------------------------------------------------------
+
+Me: Tim McGilchrist
+    @lambda_foo
+
+------------------------------------------------------------------------------------------
+
+        What is Riak?
+
+"Riak is an open source, highly scalable, fault-tolerant distributed database."
+Riak Overview.
+
+ - KV Store, some extras
+ - High availability, AP of CAP
+ - Clustered and trivial to admin
+ - Map Reduce processing
+ - Eventually consistent
+ - Written in Erlang :-)
+
+------------------------------------------------------------------------------------------
+
+        Background
+
+Based on the Amazon Dynamo paper [1] and Dr Eric Brewer's CAP Theorem. [2]
+
+Developed by Basho as part of a Salesforce application. Proved to be so good
+that people wanted the DB not the Salesforce app.
+
+I'll link to the paper at the end, it's worth a read.
+
+------------------------------------------------------------------------------------------
+
+        Clients for all
+
+Basho supported Drivers are available for:
+ * Erlang,
+ * Python,
+ * Java,
+ * PHP,
+ * Javascript, and
+ * Ruby. (ripple)
+
+[3]
+
+I've mostly been using the Erlang and Ruby clients.
+
+------------------------------------------------------------------------------------------
+
+        Key Concepts: Buckets and Keys
+
+Buckets and keys are the only way to store and retrieve data.
+
+Bucket collection of keys, allows customisation of storage. eg ??
+
+Key, pretty much anything you want (string or binary). You can supply your own or let Riak generate
+it for you.
+
+    http://127.0.0.1:8098/riak/decks/OuRIPrJ4vHI6smN5CsRFrtiVVO9
+
+------------------------------------------------------------------------------------------
+
+        Key Concept: Map Reduce
+
+Riak has MapReduce.
+
+Allows richer queries over the data stored in Riak.
+
+Use Javascript or Erlang.
+
+Brings the query to the data. Riak will send your query across the cluter to
+where the data is stored.
+
+Performance?
+
+------------------------------------------------------------------------------------------
+
+        Key Concepts: Clustering
+
+Include picture from Basho
+
+160 bit integer space.
+
+Physical servers are called nodes (ie each Riak instance running, there may be
+multiple on one physical machine)
+
+Ring is split up into vnodes/partitions.
+
+Each node has claims a number of vnodes.
+
+eg
+ a ring with 32 partitions
+ with 4 nodes
+ each node will have 8 vnodes.
+
+------------------------------------------------------------------------------------------
+
+        Clustering Cont
+
+Writes are split across multiple nodes. Only returns success if write is
+confirmed by N nodes. This is configurable.
+
+Reads from 1 or more nodes.
+For speed you can just ask for data from single node.
+
+Otherwise you specify R Value, the number of nodes that must return results for
+it to be a successful read.
+
+Configurability is key.
+
+------------------------------------------------------------------------------------------
+
+        Clustering Trival Setup
+
+Code demo?
+
+
+------------------------------------------------------------------------------------------
+
+        Ripple [4]
+
+Provides a rich modeling layer for Riak.
+Based on ActiveModel abstraction similar to ActiveRecord, DataMapper and
+MongoMapper.
+
+Supports Rails 3, 3.1 and 3.2 (almost)
+
+------------------------------------------------------------------------------------------
+
+Code demo?
+
+config/ripple.yml
+
+Show data model.
+
+Show saving a value
+
+Show retrieving a value
+
+------------------------------------------------------------------------------------------
+
+        Other stuff
+
+- link walking, create graphs within your data. Not quite Neo4J but simple
+- full text search
+- secondary indexes, unique feature to Riak
+- commit hooks
+- read repair
+
+------------------------------------------------------------------------------------------
+
+        Questions?
+
+------------------------------------------------------------------------------------------
+        Resources
+[1] Amazon DynamoDB
+www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf
+[2] CAP Theorem cs.berkeley.edu/~brewer/cs262b-2004/PODC-keynote.pdf
+[3] Riak Client libraries  wiki.basho.com/Client-Libraries.html
+[4] https://github.com/seancribbs/ripple
