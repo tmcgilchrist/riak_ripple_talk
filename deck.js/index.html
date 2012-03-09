@@ -46,8 +46,9 @@
     <li>Riak Concepts</li>
     <ul>
       <li>Buckets and Keys</li>
-      <li>Clustering<li>
+      <li>Clustering and Distribution</li>
       <li>Map Reduce</li>
+      <li>Full text search</li>
     </ul>
     <li>Using Riak from Ruby</li>
   </ol>
@@ -56,36 +57,47 @@
 
 <section class="slide" id="what">
   <h2>What is Riak?</h2>
-  <p>"Riak is an open source, highly scalable, fault-tolerant distributed
-  database."</p>
   <p>
-    <h4>Features</h4>
-    <ul>
-      <li>Key Value store</li>
-      <li>Highly Available</li>
-      <li>Clustered</li>
-      <li>Map Reduce processing</li>
-      <li>Eventually consistent</li>
-      <li>Written in Erlang</li>
-    </ul>
+    "Riak is an open source, highly scalable, fault-tolerant distributed
+    database. Different than traditional relational databases and other 'NoSQL'
+    non-relational databases" <a href='http://basho.com/products/riak-overview/'>Basho</a>
   </p>
+  <h4>Features</h4>
+  <ul>
+    <li>Key Value store</li>
+    <li>Highly available, the AP in CAP</li>
+    <li>Clustered by default</li>
+    <li>Map Reduce processing</li>
+    <li>Eventually consistent</li>
+    <li>Secondary Indexes</li>
+    <li>Full text search</li>
+    <li>Written in Erlang!</li>
+  </ul>
 </section>
 
 <section class="slide" id="background">
-  <p><h2>Background</h2></p>
+  <h2>Background</h2>
   <p>
-    Based on the Amazon Dynamo paper [1] and Dr Eric Brewer's CAP Theorem [2].
+    Based on the Amazon's Dynamo Key Value store and Dr Eric Brewer's CAP Theorem.
   </p>
   <p>
-    Originally developed by Basho as part of a Salesforce application.
+    <strong>CAP theorem</strong>, states that it is
+    impossible for a distributed computer system to simultaneously provide all
+    three of the following guarantees:
+    <ol>
+      <li>Consistency</li>
+      <li>Availability</li>
+      <li>Partition Tolerance</li>
+    </ol>
   </p>
   <p>
-    Proved to be more popular.
+    Riak was originally developed by Basho as part of a Salesforce
+    application, but proved to be more popular.
   </p>
 </section>
 
 <section class="slide" id="clients">
-  <p><h2>Clients Available</h2></p>
+  <h2>Talking the talk</h2>
   <p>
     Basho provides supported clients for:
     <ul>
@@ -206,6 +218,20 @@ function(values) {
   <code>
     https://github.com/seancribbs/ripple
   </code>
+</section>
+
+<section class="slide" id="resources">
+  <h2>Resources</h2>
+  <ul>
+    <li><a href="http://wiki.basho.com/Riak.html">Riak Wiki</a></li>
+    <li><a href="www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf">Dynamo: Amazon's Highly Available Key-value Store</a></li>
+    <li><a href="http://en.wikipedia.org/wiki/CAP_theorem">CAP theorem</a></li>
+    <li><a href="https://github.com/seancribbs/ripple">https://github.com/seancribbs/ripple</a></li>
+    <li><a href="http://wiki.basho.com/Client-Libraries.html">Riak Client libraries</a></li>
+  </ul>
+</section>
+<section class="slide" id="questions">
+  <h1>Questions?</h2>
 </section>
 
 <!-- deck.navigation snippet -->

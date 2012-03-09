@@ -1,5 +1,5 @@
 - Prepare Ripple demo that saves some values, retrieves some values and uses a map reduce query.
 - Pretty colour scheme for slides.
 http://www.colourlovers.com/palette/90734/Newly_Risen_Moon
-
+- deck.js extension to provide speaker notes.
 - Fix up codemirror examples so we get syntax highlighting
