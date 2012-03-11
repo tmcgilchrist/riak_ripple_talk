@@ -3,3 +3,22 @@
 http://www.colourlovers.com/palette/90734/Newly_Risen_Moon
 - deck.js extension to provide speaker notes.
 - Fix up codemirror examples so we get syntax highlighting
+- key/bucket examples p 6
+- link/metadata example p 7
+
+- Map Reduce example
+- Riak search example
+
+BUGS:
+- ripple wiki example for "Basic Riak::Client example"
+
+"application/javascript"
+
+No serializer has been registered for content type "application/javascript" (NotImplementedError)
+
+List Keys:
+curl -v http://127.0.0.1:8098/buckets/books/keys?keys=true
+
+Delete Key:
+
+curl -v -X DELETE http://127.0.0.1:8098/riak/books/key

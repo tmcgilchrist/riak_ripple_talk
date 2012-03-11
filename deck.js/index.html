@@ -33,25 +33,32 @@
 <!-- Begin slides -->
 <section class="slide" id="title-slide">
   <h1>Riak and Ripple</h1>
-  <p>
-    <h3>Tim McGilchrist (@lambda_foo)</h3>
-    <h3>Some guy that writes Ruby and Erlang code.</h3>
-  </p>
+
+  <h3>Tim McGilchrist (@lambda_foo)</h3>
+  <h3>Some guy that writes Ruby and Erlang code.</h3>
+
+
 </section>
 
 <section class="slide" id="overview">
-  <h2>Overview</h2>
+  <h2>Overview </h2>
+
+  <div class="left" style="float:right;">
+    <img src="images/Riak-1-1.png"/>
+  </div>
   <ol>
     <li>What is Riak?</li>
     <li>Riak Concepts</li>
     <ul>
       <li>Buckets and Keys</li>
+      <li>Links and Metadata</li>
       <li>Clustering and Distribution</li>
       <li>Map Reduce</li>
       <li>Full text search</li>
     </ul>
     <li>Using Riak from Ruby</li>
   </ol>
+
 </section>
 
 
@@ -62,7 +69,13 @@
     database. Different than traditional relational databases and other 'NoSQL'
     non-relational databases" <a href='http://basho.com/products/riak-overview/'>Basho</a>
   </p>
+
   <h4>Features</h4>
+
+  <div class="left" style="float:right;">
+    <img src="images/basho_logo.png"/>
+  </div>
+
   <ul>
     <li>Key Value store</li>
     <li>Highly available, the AP in CAP</li>
@@ -73,6 +86,7 @@
     <li>Full text search</li>
     <li>Written in Erlang!</li>
   </ul>
+
 </section>
 
 <section class="slide" id="background">
@@ -96,49 +110,88 @@
   </p>
 </section>
 
-<section class="slide" id="clients">
-  <h2>Talking the talk</h2>
-  <p>
-    Basho provides supported clients for:
-    <ul>
-      <li>Erlang</li>
-      <li>Ruby</li>
-      <li>Java</li>
-      <li>PHP</li>
-      <li>Javascript</li>
-    </ul>
-    Many more community contributed ones.
-  </p>
-</section>
-
 <section class="slide" id="buckets_keys">
-  <p><h2>Key Concept: Buckets and Keys</h2></p>
-  <p>Buckets and keys are the only way to store data and one way to retrieve data.</p>
-  <p>Bucket is simply a collection of keys</p>
-  <p>Define isolated non-default configuration per bucket. ( number of copies
-  stored in the cluster, node availability for read/writes)</p>
-  <p>Key can be either a string or binary</p>
+  <h2>Buckets and Keys</h2>
+  <p>
+    Buckets + keys are the only way to organise user data. All user data is
+    stored and referenced by bucket/key pair.
+  </p>
+  <p>
+    Bucket is a collection of keys, with associated configuration data.
+  </p>
+  <p>
+    Keys can be either a string or binary, user defined or riak can generate
+    one.
+    <br/>
+    eg 37458abc752f8413e, fancy_string
+  </p>
+  <!--<img src="images/bucket.jpg"/>-->
+  <img src="images/multi_colour_bucket.jpg"/>
 </section>
 
 <section class="slide" id="links_metadata">
-  <p><h2>Key Concept: Links and Metadata</h2></p>
+  <p><h2>Links and Metadata</h2></p>
   <p>
-    Objects in Riak can point to other objects.
-    These links can be walked, giving you graph like properties.
+    Links are metadata that establish one-way relationships between objects in
+    Riak. They can be used to loosely model graph like relationships between
+    objects in Riak.
   </p>
   <p>
     Objects can have user defined metadata in addition to the actual object
-    contents. Exposed as HTTP headers or associative arrays.
+    contents, which are exposed as HTTP headers or associative arrays.
   </p>
-  <pre><code>
-    eg from curl HTTP
-  </code></pre>
+  <p>
+    <strong>eg</strong> if <strong>/riak/list/2</strong> is part of a linked
+    list.
+  </p>
+  <img src="images/riak-links.png"/>
+</section>
+
+<section class="slide" id="clutering">
+  <h2>Clustering</h2>
+
+  <p>
+      Riak's default mode of operation is in a cluster.
+  </p>
+  <p>
+    The extent to which data is replicated, and when, and with what merge
+    strategy and failure model, is configurable at runtime.
+  </p>
+  <p>
+    Riak computes a 160-bit binary hash of the bucket/key pair, and maps this
+    value to a position on an ordered "ring" of all such values.
+  </p>
+  <img src="images/riak-ring.png"/>
+  eg 32 partitions / 4 nodes = 8 vnodes for each node
+</section>
+
+<section class="slide" id="clustering_2">
+  <h2>More Clustering</h2>
+  <div class="left" style="float:right;">
+    <img src="images/gossip.jpg"/>
+  </div>
+  <p>
+    Writes are split across multiple nodes and only returns success if write is
+    <strong>confirmed</strong> by N nodes, where N is configurable.
+  </p>
+  <p>
+    Reads are also split across multiple nodes with the same consensus
+    protocol. Inconsistent read results can be <strong>repaired</strong> without user
+    intervention (<a
+    href="http://wiki.basho.com/Riak-Glossary.html#Read-Repair">Read
+    Repair</a>).
+  </p>
+  <p>
+    Ring state is shared around the cluster by means of a <strong>gossip
+    protocol</strong>.
+  </p>
 </section>
 
 <section class="slide" id="map_reduce">
   <p><h2>Map Reduce</h2></p>
-  <p>Riak supports Map Reduce. Allowing richer queries over the data stored in Riak.</p>
+  <p>Riak's Map Reduce allows richer queries over the data stored in Riak.</p>
   <p>Can be written in Javascript or Erlang.</p>
+  <p>Spreads the processing of the query to where the data is.</p>
 
   <pre><code>
 // Map Function
@@ -159,7 +212,7 @@ function(v) {
 
 <section class="slide" id="map_reduce_2">
   <p><h2>Map Reduce Cont.</h2></p>
-<pre><code>
+  <pre><code>
 // Reduce Function
 function(values) {
   var result = {};
@@ -173,40 +226,28 @@ function(values) {
   }
   return [result];
 }
-</code></pre>
-
+  </code></pre>
 </section>
 
-<section class="slide" id="clutering">
-  <p><h2>Clustering</h2></p>
-  <img src="images/riak-ring.png"/>
+<section class="slide" id="clients">
+  <h2>Talking the talk</h2>
   <p>
+    Basho provides supported clients for:
     <ul>
-      <li>160 bit integer key space</li>
-      <li>Each riak instance is called a node. (may have multiple per physical
-      server)</li>
-      <li>Ring is split into vnodes/partitions.</li>
-      <li>Each node claims a number of vnodes.</li>
+      <li>Erlang</li>
+      <li>Ruby</li>
+      <li>Java</li>
+      <li>PHP</li>
+      <li>Javascript</li>
     </ul>
-    eg 32 partitions / 4 nodes = 8 vnodes for each node
-  </p>
-</section>
-
-<section class="slide" id="clustering_2">
-  <p><h2>More Clustering</h2></p>
-  <p>
-    Writes are split across multiple nodes and only returns success if write is
-    <strong>confirmed</strong> by N nodes, where N is configurable.
-  </p>
-  <p>
-    Reads ?
+    Many more community contributed ones.
   </p>
 </section>
 
 <section class="slide" id="wheres_ruby">
   <p><h2>Where's the Ruby dude?</h2></p>
   <p>
-    Basho provides great ruby support via the Ripple library.
+    Basho provides great Ruby support via the Ripple library.
   </p>
   <p>
     Ripple provides a rich modeling layer for Riak, based on ActiveModel
@@ -218,6 +259,85 @@ function(values) {
   <code>
     https://github.com/seancribbs/ripple
   </code>
+</section>
+
+<section class="slide" id="riak_setup">
+  <h2>Setting up Riak</h2>
+  <p>
+    Available for all good Unix systems. Instructions available on
+    <a href="http://wiki.basho.com/Installation.html">
+      wiki.basho.com
+    </a>
+  </p>
+  <pre>
+phoenix$ curl -O http://downloads.basho.com/riak/riak-1.1.1/riak-1.1.1-osx-x86_64.tar.gz
+phoenix$ tar xzvf riak-1.1.1-osx-x86_64.tar.gz
+phoenix$ cd riak-1.1.1
+phoenix:riak-1.1.1 tim$ ./bin/riak start
+phoenix:riak-1.1.1 tim$ ./bin/riak ping
+pong
+  </pre>
+</section>
+
+<section class="slide" id="loading_data">
+  <h2>Saving data to Riak</h2>
+  <pre>
+require 'riak'
+
+# Create a client connection
+client = Riak::Client.new
+
+# Retrieve a bucket
+bucket = client.bucket("books")
+
+# Create a new object
+new_book = Riak::RObject.new(bucket, 'erlang_otp_in_action')
+new_book.content_type = 'application/json'
+new_book.data = { title: 'Erlang and OTP in Action',
+                  author: 'Logan Martin',
+                  summary: 'Erlang is an adaptable and fault tolerant functional programming language originally designed for the unique demands of the telecom industry'}
+
+# Save!
+new_book.store
+
+  </pre>
+</section>
+
+<section class="slide" id="retrieve_data">
+  <h2>Retrieve Data</h2>
+  <pre>
+phoenix$ curl -v http://127.0.0.1:8098/riak/books/erlang_otp_in_action
+* About to connect() to 127.0.0.1 port 8098 (#0)
+*   Trying 127.0.0.1...
+* connected
+* Connected to 127.0.0.1 (127.0.0.1) port 8098 (#0)
+> GET /riak/books/erlang_otp_in_action HTTP/1.1
+> User-Agent: curl/7.24.0 (x86_64-apple-darwin11.3.0) libcurl/7.24.0 OpenSSL/1.0.0g zlib/1.2.6 libidn/1.22
+> Host: 127.0.0.1:8098
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< X-Riak-Vclock: a85hYGBgzGDKBVIcypz/fvpHeitmMCUy5bEyOOw6f4IvCwA=
+< Vary: Accept-Encoding
+< Server: MochiWeb/1.1 WebMachine/1.9.0 (someone had painted it blue)
+< Link: </riak/books>; rel="up"
+< Last-Modified: Sat, 10 Mar 2012 11:42:56 GMT
+< ETag: "76dfItNC7ZsSupMV0VIGZ4"
+< Date: Sun, 11 Mar 2012 10:15:55 GMT
+< Content-Type: application/json
+< Content-Length: 213
+<
+* Connection #0 to host 127.0.0.1 left intact
+{"title":"Erlang and OTP in Action","author":"Logan Martin","summary":"Erlang is an adaptable and fault tolerant functional programming language originally designed for the unique demands of the telecom industry"}* Closing connection #0
+  </pre>
+</section>
+
+<section class="slide" id="map_reduce">
+  <h2>Map Reduce</h2>
+</section>
+
+<section class="slide" id="search">
+  <h2>Full Text Search</h2>
 </section>
 
 <section class="slide" id="resources">
