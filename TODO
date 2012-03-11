@@ -1,12 +1,9 @@
-- Prepare Ripple demo that saves some values, retrieves some values and uses a map reduce query.
+
 - Pretty colour scheme for slides.
 http://www.colourlovers.com/palette/90734/Newly_Risen_Moon
-- deck.js extension to provide speaker notes.
-- Fix up codemirror examples so we get syntax highlighting
-- key/bucket examples p 6
-- link/metadata example p 7
 
-- Map Reduce example
+- read riak wiki on concepts and map reduce example
+- Prepare Ripple demo that saves some values, retrieves some values and uses a map reduce query.
 - Riak search example
 
 BUGS:
@@ -16,9 +13,15 @@ BUGS:
 
 No serializer has been registered for content type "application/javascript" (NotImplementedError)
 
+- ripple example introduces a flawed MapReduce example, no definition of JSON data.
+
 List Keys:
 curl -v http://127.0.0.1:8098/buckets/books/keys?keys=true
 
 Delete Key:
 
 curl -v -X DELETE http://127.0.0.1:8098/riak/books/key
+
+NOTES:
+
+Riak runs map-step functions right on the node holding the input data for those functions, and it runs reduce-step functions on the node coordinating the MapReduce query.

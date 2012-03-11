@@ -4,6 +4,7 @@ puts "Load Books into Riak"
 
 client = Riak::Client.new
 bucket = client.bucket("books")
+bucket.enable_index!
 
 json_data = {
   'erlang_otp_in_action' => {
@@ -29,7 +30,12 @@ json_data = {
   'programming_erlang' => {
     title: 'Programming Erlang: Software for a Concurrent World',
     author: 'Joe Armstrong',
-    summary: 'Erlang solves one of the most pressing problems facing developers today: how to write reliable, concurrent, high-performance systems.'}
+    summary: 'Erlang solves one of the most pressing problems facing developers today: how to write reliable, concurrent, high-performance systems.'},
+  'joe_says' => {
+    title: 'Things Joe Says',
+    author: 'Joe Armstrong',
+    summary: 'Collection of quotes from Joe\'s talks, like Erlang is the most OO language.'
+  }
 }
 
 json_data.each do |key, value|

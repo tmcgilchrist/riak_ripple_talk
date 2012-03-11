@@ -304,7 +304,7 @@ new_book.store
 </section>
 
 <section class="slide" id="retrieve_data">
-  <h2>Retrieve Data</h2>
+  <h2>Where's my data?</h2>
   <pre>
 phoenix$ curl -v http://127.0.0.1:8098/riak/books/erlang_otp_in_action
 * About to connect() to 127.0.0.1 port 8098 (#0)
@@ -332,14 +332,69 @@ phoenix$ curl -v http://127.0.0.1:8098/riak/books/erlang_otp_in_action
   </pre>
 </section>
 
+<section class="slide" id="retrieve_data_2">
+  <h2>More Data</h2>
+<pre>
+phoenix$ curl -v http://127.0.0.1:8098/buckets/books/keys?keys=true
+$ curl -v http://127.0.0.1:8098/buckets/books/keys?keys=true
+...
+< HTTP/1.1 200 OK
+< Vary: Accept-Encoding
+< Server: MochiWeb/1.1 WebMachine/1.9.0 (someone had painted it blue)
+< Date: Sun, 11 Mar 2012 10:42:36 GMT
+< Content-Type: application/json
+< Content-Length: 155
+<
+* Connection #0 to host 127.0.0.1 left intact
+{"keys":["machine_learning_in_action","erlang_otp_in_action","programming_erlang","well_grounded_rubyist","practical_common_lisp","javascript_good_parts"]}* Closing connection #0
+</pre>
+<pre>
+phoenix$ curl -v -X DELETE http://127.0.0.1:8098/riak/books/erlang_otp_in_action
+...
+< HTTP/1.1 204 No Content
+< Vary: Accept-Encoding
+...
+</pre>
+</section>
+
 <section class="slide" id="map_reduce">
   <h2>Map Reduce</h2>
+  <pre>
+results = Riak::MapReduce.new(client).add("books").
+  map("function(v) {
+     var results = [];
+     var book = JSON.parse(v.values[0].data);
+     if (book.author == 'Joe Armstrong') {
+       results.push(book);
+     }
+     return results;
+  }", :keep => true).run
+
+puts results
+  </pre>
+  <pre>
+{"title"=>"Programming Erlang: Software for a Concurrent World", "author"=>"Joe Armstrong", "summary"=>"Erlang solves one of the most pressing problems facing developers today: how to write reliable, concurrent, high-performance systems."}
+{"title"=>"Things Joe Says", "author"=>"Joe Armstrong", "summary"=>"Collection of quotes from Joe's talks, like Erlang is the most OO language."}
+  </pre>
 </section>
 
 <section class="slide" id="search">
   <h2>Full Text Search</h2>
+  <p>
+    Write me!
+  </p>
 </section>
 
+<section class="slide" id="else">
+  <h2>What else?</h2>
+  <ul>
+    <li>Commit hooks, invoke code before or after save</li>
+    <li>Secondary indexes</li>
+    <li>Luwak, store large binaries</li>
+    <li>riak_core, github.com/basho/riak_core</li>
+    <li>Administration simplicity</li>
+  </ul>
+</section>
 <section class="slide" id="resources">
   <h2>Resources</h2>
   <ul>
