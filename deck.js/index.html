@@ -22,8 +22,10 @@
   <link rel="stylesheet" href="extensions/hash/deck.hash.css"/>
 
   <!-- Theme CSS files (menu swaps these out) -->
+  <link rel="stylesheet" href="extensions/codemirror/deck.codemirror.css"/>
+  <link rel="stylesheet" href="extensions/codemirror/themes/default.css"/>
 
-  <!--<link rel="stylesheet" href="themes/style/swiss.css">-->
+  <link rel="stylesheet" href="themes/style/basho.css">
 
   <script src="modernizr.custom.js"></script>
 </head>
@@ -36,7 +38,6 @@
 
   <h3>Tim McGilchrist (@lambda_foo)</h3>
   <h3>Some guy that writes Ruby and Erlang code.</h3>
-
 
 </section>
 
@@ -61,14 +62,17 @@
 
 </section>
 
-
 <section class="slide" id="what">
   <h2>What is Riak?</h2>
-  <p>
-    "Riak is an open source, highly scalable, fault-tolerant distributed
-    database. Different than traditional relational databases and other 'NoSQL'
-    non-relational databases" <a href='http://basho.com/products/riak-overview/'>Basho</a>
-  </p>
+
+  <blockquote cite="http://basho.com/products/riak-overview/">
+    <p>
+      Riak is an open source, highly scalable, fault-tolerant distributed
+      database. Different than traditional relational databases and other 'NoSQL'
+      non-relational databases
+    </p>
+    <p><cite>Basho</cite></p>
+  </blockquote>
 
   <h4>Features</h4>
 
@@ -192,8 +196,9 @@
   <p>Riak's Map Reduce allows richer queries over the data stored in Riak.</p>
   <p>Can be written in Javascript or Erlang.</p>
   <p>Spreads the processing of the query to where the data is.</p>
-
-  <pre><code>
+  <div>
+    <div id="code" name="code" class="code" mode="javascript" style="display:
+                                                                     none;">
 // Map Function
 function(v) {
   var words =
@@ -207,12 +212,15 @@ function(v) {
     }
   return counts;
 }
-  </code></pre>
+    </div>
+  </div>
 </section>
 
 <section class="slide" id="map_reduce_2">
   <p><h2>Map Reduce Cont.</h2></p>
-  <pre><code>
+  <div>
+    <div id="code" name="code" class="code" mode="javascript" style="display:
+                                                                     none;">
 // Reduce Function
 function(values) {
   var result = {};
@@ -226,7 +234,8 @@ function(values) {
   }
   return [result];
 }
-  </code></pre>
+    </div>
+  </div>
 </section>
 
 <section class="slide" id="clients">
@@ -247,17 +256,26 @@ function(values) {
 <section class="slide" id="wheres_ruby">
   <p><h2>Where's the Ruby dude?</h2></p>
   <p>
-    Basho provides great Ruby support via the Ripple library.
+    Basho provides great Ruby support via the Ripple library, https://github.com/seancribbs/ripple
   </p>
   <p>
-    Ripple provides a rich modeling layer for Riak, based on ActiveModel
-    abstraction similar to ActiveRecord, DataMapper and MongoMapper.
+    It includes two namespaces:
+    <ul>
+      <li>
+        <strong>Riak</strong> basic wrapper around typical operations.
+      </li>
+      <li>
+        <strong>Ripple</strong> provides a rich modeling layer for Riak, based
+        on ActiveModel abstraction similar to ActiveRecord, DataMapper and
+        MongoMapper.
+      </li>
+    </ul>
   </p>
   <p>
     Supports Rails 3, 3.1 and 3.2 (almost).
   </p>
   <code>
-    https://github.com/seancribbs/ripple
+
   </code>
 </section>
 
@@ -299,8 +317,31 @@ new_book.data = { title: 'Erlang and OTP in Action',
 
 # Save!
 new_book.store
+  </pre>
+</section>
+
+<section class="slide" id="active_resource_save">
+  <h2>Using Ripple ActiveModel</h2>
+  <pre>
+require 'ripple'
+
+class Book
+  include Ripple::Document
+
+  property :title, String, :presence => true
+  property :author, String, :presence => true
+  property :summary, String, :presence => true
+end
+
+book = Book.new
+book.title = 'The Well-Grounded Rubyist'
+book.author = 'David Black'
+book.summary = 'The Well-Grounded Rubyist takes you from interested novice to proficient practitioner.'
+
+book.save
 
   </pre>
+
 </section>
 
 <section class="slide" id="retrieve_data">
@@ -336,7 +377,6 @@ phoenix$ curl -v http://127.0.0.1:8098/riak/books/erlang_otp_in_action
   <h2>More Data</h2>
 <pre>
 phoenix$ curl -v http://127.0.0.1:8098/buckets/books/keys?keys=true
-$ curl -v http://127.0.0.1:8098/buckets/books/keys?keys=true
 ...
 < HTTP/1.1 200 OK
 < Vary: Accept-Encoding
@@ -360,6 +400,8 @@ phoenix$ curl -v -X DELETE http://127.0.0.1:8098/riak/books/erlang_otp_in_action
 <section class="slide" id="map_reduce">
   <h2>Map Reduce</h2>
   <pre>
+require 'riak'
+...
 results = Riak::MapReduce.new(client).add("books").
   map("function(v) {
      var results = [];
@@ -378,31 +420,26 @@ puts results
   </pre>
 </section>
 
-<section class="slide" id="search">
-  <h2>Full Text Search</h2>
-  <p>
-    Write me!
-  </p>
-</section>
-
 <section class="slide" id="else">
   <h2>What else?</h2>
   <ul>
+    <li>Full Text Search</li>
     <li>Commit hooks, invoke code before or after save</li>
     <li>Secondary indexes</li>
     <li>Luwak, store large binaries</li>
     <li>riak_core, github.com/basho/riak_core</li>
-    <li>Administration simplicity</li>
+    <li>Simple Administration</li>
   </ul>
 </section>
 <section class="slide" id="resources">
   <h2>Resources</h2>
   <ul>
-    <li><a href="http://wiki.basho.com/Riak.html">Riak Wiki</a></li>
+    <li><a href="http://wiki.basho.com/Riak.html">http://wiki.basho.com/Riak.html</a></li>
     <li><a href="www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf">Dynamo: Amazon's Highly Available Key-value Store</a></li>
-    <li><a href="http://en.wikipedia.org/wiki/CAP_theorem">CAP theorem</a></li>
+    <li><a href="http://en.wikipedia.org/wiki/CAP_theorem">http://en.wikipedia.org/wiki/CAP_theorem</a></li>
     <li><a href="https://github.com/seancribbs/ripple">https://github.com/seancribbs/ripple</a></li>
-    <li><a href="http://wiki.basho.com/Client-Libraries.html">Riak Client libraries</a></li>
+    <li><a href="http://wiki.basho.com/Client-Libraries.html">http://wiki.basho.com/Client-Libraries.html</a></li>
+    <li>Slides @ <a href="https://github.com/tmcgilchrist/riak_ripple_talk">tmcgilchrist/riak_ripple_talk</a></li>
   </ul>
 </section>
 <section class="slide" id="questions">
@@ -441,6 +478,22 @@ puts results
 <script src="extensions/goto/deck.goto.js"></script>
 <script src="extensions/status/deck.status.js"></script>
 <script src="extensions/navigation/deck.navigation.js"></script>
+
+<!-- Base codemiror code -->
+<script src="extensions/codemirror/codemirror.js"></script>
+
+<!-- Syntax highlighting Modes -->
+
+<!-- javascript -->
+<script src="extensions/codemirror/mode/javascript/javascript.js"></script>
+
+<!-- html mode (note html mode requires xml, css and javascript) -->
+<script src="extensions/codemirror/mode/xml/xml.js"></script>
+<script src="extensions/codemirror/mode/css/css.js"></script>
+<script src="extensions/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+
+<!-- Plugin code -->
+<script src="extensions/codemirror/deck.codemirror.js"></script>
 
 <!-- Initialize the deck -->
 <script>
