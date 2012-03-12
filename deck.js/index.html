@@ -49,13 +49,13 @@
   </div>
   <ol>
     <li>What is Riak?</li>
-    <li>Riak Concepts</li>
+    <li>Riak Concepts & Features</li>
     <ul>
       <li>Buckets and Keys</li>
       <li>Links and Metadata</li>
       <li>Clustering and Distribution</li>
+      <li>Replication</li>
       <li>Map Reduce</li>
-      <li>Full text search</li>
     </ul>
     <li>Using Riak from Ruby</li>
   </ol>
@@ -95,6 +95,9 @@
 
 <section class="slide" id="background">
   <h2>Background</h2>
+  <div class="left" style="float:right;">
+    <img src="images/red_cap_mushroom.jpg"/>
+  </div>
   <p>
     Based on the Amazon's Dynamo Key Value store and Dr Eric Brewer's CAP Theorem.
   </p>
@@ -108,6 +111,7 @@
       <li>Partition Tolerance</li>
     </ol>
   </p>
+
   <p>
     Riak was originally developed by Basho as part of a Salesforce
     application, but proved to be more popular.
@@ -127,7 +131,7 @@
     Keys can be either a string or binary, user defined or riak can generate
     one.
     <br/>
-    eg 37458abc752f8413e, fancy_string
+    eg 37458abc752f8413e, fancy_string or 0xDEADBEEF
   </p>
   <!--<img src="images/bucket.jpg"/>-->
   <img src="images/multi_colour_bucket.jpg"/>
@@ -191,14 +195,35 @@
   </p>
 </section>
 
+<section class="slide" id="replication">
+  <h2>One is good, Many is Better</h2
+
+  <p>
+    <img src="images/being-john-malkovich.jpg" align="right"/>
+    Replication is fundamental and automatic in Riak.
+  </p>
+  <p>
+    All data stored in Riak will be replicated to a number of nodes in the
+    cluster according to the n_val property set on the bucket.
+  </p>
+  <p>
+    By default, Riak chooses an n_val of 3 for you.
+  </p>
+  <p>
+    Tune <strong>n_val<strong> wisely, high values provide more redundency and lower values
+    provide more speed.
+  </p>
+</div>
+
+</section>
+
 <section class="slide" id="map_reduce">
   <p><h2>Map Reduce</h2></p>
   <p>Riak's Map Reduce allows richer queries over the data stored in Riak.</p>
   <p>Can be written in Javascript or Erlang.</p>
   <p>Spreads the processing of the query to where the data is.</p>
   <div>
-    <div id="code" name="code" class="code" mode="javascript" style="display:
-                                                                     none;">
+    <div id="code" name="code" class="code" mode="javascript" style="display:none;">
 // Map Function
 function(v) {
   var words =
@@ -219,8 +244,7 @@ function(v) {
 <section class="slide" id="map_reduce_2">
   <p><h2>Map Reduce Cont.</h2></p>
   <div>
-    <div id="code" name="code" class="code" mode="javascript" style="display:
-                                                                     none;">
+    <div id="code" name="code" class="code" mode="javascript" style="display:none;">
 // Reduce Function
 function(values) {
   var result = {};

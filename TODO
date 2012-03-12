@@ -3,8 +3,6 @@
 http://www.colourlovers.com/palette/90734/Newly_Risen_Moon
 
 - read riak wiki on concepts and map reduce example
-- Prepare Ripple demo that saves some values, retrieves some values and uses a map reduce query.
-- Riak search example
 
 BUGS:
 - ripple wiki example for "Basic Riak::Client example"
@@ -24,4 +22,18 @@ curl -v -X DELETE http://127.0.0.1:8098/riak/books/key
 
 NOTES:
 
+Basho focuses on solid engineering and no hype. They are known to point customers to other products if they don't fit Riaks model. Clean code.
+
+Buckets might be compared to tables or folders in relational databases or file systems, respectively.
+
+How existing RDBMS systems are organised?
+
+Contrast to Riak, where there is only objects.
+
+Clustering, talk to a single node which co-ordinates read/writes on your behalf.
+
+Default buckets are essentially free and unlimited, non-default requires gossiping of the details.
+
 Riak runs map-step functions right on the node holding the input data for those functions, and it runs reduce-step functions on the node coordinating the MapReduce query.
+
+Ripple, doesn't support the full text search API.
