@@ -13,6 +13,8 @@ syntax highlighting.
 Much of the technical details were researched on Basho's website, which is a
 fantastic resource, but any mistakes are all my own.
 
+To view the slides open up deck.js/index.html.
+
 ### Resources
 
 * [http://nubyonrails.com/articles/improve-your-technical-slides](http://nubyonrails.com/articles/improve-your-technical-slides)
